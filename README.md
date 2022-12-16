@@ -1,12 +1,13 @@
 # Weather App Backend
-weather app backend
+This is a weather application
+
 
 # Setup instruction
 ## Steps
 1. npm init -y (this will create a package.json)
 2. npm i axios body-parser cors dotenv express express-rate-limit express-validator mongoose nodemon --save  
 3.  create folder structure see below
-4.  Add code under index.js
+4.  Add code under root index.js
 5.  Add code under loaders
 6.  Add code under app
 ## Folder Structure
@@ -26,4 +27,7 @@ weather app backend
 - index.js (entry file/code start here)
 - package.json (this is when we run npm init)
 - README.md (explain what the project is and how to run)
+
+## Flow
+root index.js -> loaders/index.js -> loaders/express.js -> app/routes/v1/api.js
 
