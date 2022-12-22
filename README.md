@@ -29,5 +29,10 @@ This is a weather application
 - README.md (explain what the project is and how to run)
 
 ## Flow
+#### Loader
 root index.js -> loaders/index.js -> loaders/express.js -> app/routes/v1/api.js
 
+#### Application
+app/routes/v1/api..js -> controller -> services -> return back to controller
+
+app/routes/v1/api..js -> middleware -> validation -> controller -> services -> return back to controller

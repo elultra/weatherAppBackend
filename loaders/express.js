@@ -3,9 +3,9 @@ const express = require('express');
 const apiRouter = require('../app/routes/v1/api');
 const config = require('../app/config');
 const startServer = () =>{
-      // 1. ln9. init express
-      // 2. ln10. listen to server
-      // 3. ln15. return which can use later
+      // 1. init express
+      // 2. listen to server
+      // 3. return which can use later
       const app = express();
       app.listen(config.port, err=>{
             if(err){
@@ -17,7 +17,7 @@ const startServer = () =>{
 }
 
 module.exports = () =>{
-      // 1. ln23 call the function above
+      // 1.  call the function above
       // 2. cors
       // 3. return which can use later
       // 4. ln25. change to json
