@@ -1,8 +1,9 @@
-const weatherapiService= require('../services/openweathermapServiceAPI');
+const weatherapiService = require('../services/openweathermapServiceAPI')
 
 //  Get all weather
 exports.index = async(req,res) => {
-      res.send(await weatherapiService.getWeather());
+      const data = await weatherapiService.getWeather();
+      res.send(data.data)
 }
 //  Post: create weather
 exports.store = (req,res) =>{
@@ -17,6 +18,6 @@ exports.show = (req,res) =>{
 
 }
 //  Delete: delete weather
-exports.deleteWeather = (req,res) =>{
+exports.delete = (req,res) =>{
 
 }
