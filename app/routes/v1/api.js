@@ -3,6 +3,8 @@ const router = new express.Router();
 const weatherController = require('../../controllers/weatherController')
 
 router.get('/weathers', weatherController.getAllCurrentWeather);
+
+router.get('/geo', weatherController.getGeo);
 router.get('/weathers/:city', weatherController.show);
 
 router.delete('/weathers/:city', weatherController.delete);

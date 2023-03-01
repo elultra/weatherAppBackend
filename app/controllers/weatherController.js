@@ -27,6 +27,11 @@ exports.getAllCurrentWeather= async(req,res)=>{
       })
       res.send(currentWeather);
 }
+// Get: geo coding
+exports.getGeo = async(req,res)=>{
+      const data = await weatherapiService.getGeo();
+      res.send(data);
+}
 //  Post: create weather
 exports.store = (req,res) =>{
 
