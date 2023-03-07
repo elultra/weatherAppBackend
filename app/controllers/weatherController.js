@@ -26,11 +26,13 @@ exports.getTimeMatchedWeather = async (req, res) => {
                   userHours = 0;
             }
             const geoData = await weatherapiService.getGeo(req.params.country);
+            const country = {"country": geoData.data[0].name};
             const latitude = geoData.data[0].lat.toFixed(2);
             const longtitude = geoData.data[0].lon.toFixed(2);
             
             const {data} = await weatherapiService.getWeather(latitude,longtitude);
             const currentWeather = data.list.filter(item=>item.dt_txt.includes((userHours)+":00:00"))
+            currentWeather.push(country)
             res.send(currentWeather);
       }catch(err){
             console.log(err)
@@ -40,9 +42,10 @@ exports.getTimeMatchedWeather = async (req, res) => {
 exports.getGeo = async (req, res) => {
       try {
             const { data } = await weatherapiService.getGeo(req.params.country);
+            const country = data[1].name;
             const latitude = data[0].lat.toFixed(2);
             const longtitude = data[0].lon.toFixed(2);
-            const coordinate = [latitude, longtitude];
+            const coordinate = [latitude, longtitude, country];
             res.send(coordinate);
       } catch (error) {
             console.log(error)
