@@ -21,7 +21,7 @@ const startServer = () => {
 };
 
 module.exports = () => {
-    // 1.  call the function above
+    // 1. call the function above
     // 2. cors
     // 3. return which can use later
     // 4. ln25. change to json
