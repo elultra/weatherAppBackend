@@ -1,0 +1,71 @@
+paths:
+    /weather:
+        get:
+            tags:
+                - Weather
+            summary: Get all weather
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/WeatherData"
+            x-controller: weatherController.index
+    /weather/time-matched/{country}:
+        get:
+            tags:
+                - Weather
+            summary: Get weather matching data time with user's time
+            parameters:
+                - name: country
+                  in: path
+                  description: Country name
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/WeatherData"
+            x-controller: weatherController.getTimeMatchedWeather
+    /geo/{country}:
+        get:
+            tags:
+                - Geo
+            summary: Get geo coding
+            parameters:
+                - name: country
+                  in: path
+                  description: Country name
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+            x-controller: weatherController.getGeo
+components:
+    schemas:
+        WeatherData:
+            type: object
+            properties:
+                property1:
+                    type: string
+                    description: Description of property1
+                property2:
+                    type: integer
+                    description: Description of property2
