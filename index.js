@@ -15,9 +15,9 @@ const corsOptions = {
         "http://localhost:3000",
     ],
 };
+app.use(cors(corsOptions));
 app.use("/v1", v1Router);
 app.use(express.json());
-app.use(cors(corsOptions));
 app.use(morgan(process.env.NODE_ENV === "production" ? "common" : "dev"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
