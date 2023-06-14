@@ -6,7 +6,7 @@ const {
     testweather,
 } = require("../controllers/weatherController");
 
-weatherRouter.get("/", getAllWeather);
+weatherRouter.get("/all", getAllWeather);
 weatherRouter.get("/:country?", getWeatherByLocationMatchedTime);
 weatherRouter.get("/test", testweather);
 // router.get('/weathers/:country', weatherController.cityWeather);

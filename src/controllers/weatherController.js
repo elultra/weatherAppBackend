@@ -53,16 +53,19 @@ const getWeatherByLocationMatchedTime = async (req, res) => {
         } else {
             userHours = 0;
         }
-        const geoData = await getGeo(req.params.country.toLowerCase());
+        const geoData = await getGeo(req.params.country);
         const country = { country: geoData.data[0].name };
         const latitude = geoData.data[0].lat.toFixed(2);
         const longtitude = geoData.data[0].lon.toFixed(2);
 
         const { data } = await getWeather(latitude, longtitude);
-        const currentWeather = data.list.filter((item) =>
-            item.dt_txt.includes(userHours + ":00:00")
-        );
-        currentWeather.push(country);
+        const currentWeather = [
+            ...data.list.filter((item) =>
+                item.dt_txt.includes(userHours + ":00:00")
+            ),
+            country,
+        ];
+        // currentWeather.push(country);
         return res.status(StatusCodes.OK).json(currentWeather);
     } catch (err) {
         console.log(err);
