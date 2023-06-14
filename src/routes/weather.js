@@ -1,14 +1,14 @@
 const { Router } = require("express");
-
 const weatherRouter = Router();
 const {
     getAllWeather,
-    getTimeMatchedWeather,
+    getWeatherByLocationMatchedTime,
+    testweather,
 } = require("../controllers/weatherController");
 
 weatherRouter.get("/", getAllWeather);
-weatherRouter.get("/:country?", getTimeMatchedWeather);
-
+weatherRouter.get("/:country?", getWeatherByLocationMatchedTime);
+weatherRouter.get("/test", testweather);
 // router.get('/weathers/:country', weatherController.cityWeather);
 
 // router.delete('/weathers/:city', weatherController.delete);

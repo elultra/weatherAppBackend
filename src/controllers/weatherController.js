@@ -1,17 +1,44 @@
-const { getGeo, getWeather } = require("../services/openweathermapServiceAPI");
+const { getWeather, getGeo } = require("../services/openweathermapServiceAPI");
 const { StatusCodes, getReasonPhrase } = require("http-status-codes");
 
-//  Get all weather
-const getAllWeather = async (req, res) => {
+const testweather = async (req, res) => {
     try {
-        const { data } = await getWeather();
-        return res.status(StatusCodes.OK).json(data);
+        return res.status(StatusCodes.OK).json("test");
     } catch (error) {
         console.log(error);
     }
 };
-//  Get weather matching data time with users time
-const getTimeMatchedWeather = async (req, res) => {
+
+//  Get all weather
+const getAllWeather = async (req, res) => {
+    try {
+        const response = await getWeather();
+        const { data } = response;
+        if (data) {
+            return res.status(StatusCodes.OK).json(data);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// Get weather based on location
+const getWeatherByLocation = async (req, res) => {
+    try {
+        const geoData = await getGeo(req.params.country.toLowerCase());
+        const country = { country: geoData.data[0].name };
+        const latitude = geoData.data[0].lat.toFixed(2);
+        const longtitude = geoData.data[0].lon.toFixed(2);
+        const { data } = await getWeather(latitude, longtitude);
+        const weather = [...data, country];
+        return res.status(StatusCodes.OK).json(weather);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// Get weather based on location with matching data time with users time
+const getWeatherByLocationMatchedTime = async (req, res) => {
     try {
         const date = new Date();
         const hours = date.getHours();
@@ -26,7 +53,7 @@ const getTimeMatchedWeather = async (req, res) => {
         } else {
             userHours = 0;
         }
-        const geoData = await getGeo(req.params.country);
+        const geoData = await getGeo(req.params.country.toLowerCase());
         const country = { country: geoData.data[0].name };
         const latitude = geoData.data[0].lat.toFixed(2);
         const longtitude = geoData.data[0].lon.toFixed(2);
@@ -41,10 +68,12 @@ const getTimeMatchedWeather = async (req, res) => {
         console.log(err);
     }
 };
-// Get: geo coding
+
+// Get geo Location
 const getGeoLocation = async (req, res) => {
     try {
         const { data } = await getGeo(req.params.country);
+        console.log(data);
         const country = data[1].name;
         const latitude = data[0].lat.toFixed(2);
         const longtitude = data[0].lon.toFixed(2);
@@ -57,6 +86,7 @@ const getGeoLocation = async (req, res) => {
 
 module.exports = {
     getAllWeather,
-    getTimeMatchedWeather,
+    getWeatherByLocationMatchedTime,
     getGeoLocation,
+    testweather,
 };

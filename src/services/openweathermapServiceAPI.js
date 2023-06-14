@@ -8,7 +8,7 @@ const getWeather = async (lat = -33.87, lon = 151.21) => {
         const response = await axios.get(
             `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=${openweathermapServiceAPI}`
         );
-        return response.data;
+        return response;
     } catch (error) {
         console.log(error);
         throw new Error("Failed to fetch weather data");
@@ -20,7 +20,7 @@ const getGeo = async (geo = "sydney") => {
         const response = await axios.get(
             `http://api.openweathermap.org/geo/1.0/direct?q=${geo}&limit=5&appid=${openweathermapServiceAPI}`
         );
-        return response.data;
+        return response;
     } catch (error) {
         console.log(error);
         throw new Error("Failed to fetch geo data");
