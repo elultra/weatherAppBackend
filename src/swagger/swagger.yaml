@@ -1,9 +1,115 @@
+components:
+    schemas:
+        WeatherData:
+            type: object
+            properties:
+                dt:
+                    type: integer
+                    description: Unix timestamp of the data point
+                main:
+                    $ref: "#/components/schemas/WeatherMain"
+                weather:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Weather"
+                clouds:
+                    $ref: "#/components/schemas/Clouds"
+                wind:
+                    $ref: "#/components/schemas/Wind"
+                visibility:
+                    type: integer
+                    description: Visibility in meters
+                pop:
+                    type: number
+                    description: Probability of precipitation
+                sys:
+                    $ref: "#/components/schemas/Sys"
+                dt_txt:
+                    type: string
+                    description: Date and time of the data point
+        WeatherMain:
+            type: object
+            properties:
+                temp:
+                    type: number
+                    description: Temperature in Celsius
+                feels_like:
+                    type: number
+                    description: "Perceived temperature in Celsius"
+                temp_min:
+                    type: number
+                    description: Minimum temperature in Celsius
+                temp_max:
+                    type: number
+                    description: Maximum temperature in Celsius
+                pressure:
+                    type: integer
+                    description: Atmospheric pressure in hPa
+                sea_level:
+                    type: integer
+                    description: Sea-level atmospheric pressure in hPa
+                grnd_level:
+                    type: integer
+                    description: Ground-level atmospheric pressure in hPa
+                humidity:
+                    type: integer
+                    description: Humidity percentage
+                temp_kf:
+                    type: number
+                    description: Internal parameter
+        Weather:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    description: Weather condition ID
+                main:
+                    type: string
+                    description: Main weather description
+                description:
+                    type: string
+                    description: Detailed weather description
+                icon:
+                    type: string
+                    description: Weather icon ID
+        Clouds:
+            type: object
+            properties:
+                all:
+                    type: integer
+                    description: Cloudiness percentage
+        Wind:
+            type: object
+            properties:
+                speed:
+                    type: number
+                    description: Wind speed in meters per second
+                deg:
+                    type: integer
+                    description: Wind direction in degrees
+                gust:
+                    type: number
+                    description: Wind gust speed in meters per second
+        Sys:
+            type: object
+            properties:
+                pod:
+                    type: string
+                    description: Part of the day ('n' for night, 'd' for day')
+
+tags:
+    - name: Weather
+      description: Operations related to weather
+    - name: Location
+      description: Operations related to location
+
 paths:
-    /weather:
+    /v1/weathers/:
         get:
+            summary: Get Weather Data
+            description: Retrieve weather data for a specific location
             tags:
                 - Weather
-            summary: Get all weather
             responses:
                 "200":
                     description: OK
@@ -13,16 +119,19 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/WeatherData"
-            x-controller: weatherController.index
-    /weather/time-matched/{country}:
+                                    country:
+                                        type: string
+                                        description: the location's weather
+    /v1/weathers/{country}:
         get:
+            summary: Get weather data by country
+            description: Retrieve weather data based on provided country
             tags:
                 - Weather
-            summary: Get weather matching data time with user's time
             parameters:
-                - name: country
-                  in: path
-                  description: Country name
+                - in: path
+                  name: country
+                  description: Country code or name
                   required: true
                   schema:
                       type: string
@@ -35,16 +144,16 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/WeatherData"
-            x-controller: weatherController.getTimeMatchedWeather
-    /geo/{country}:
+    /v1/{country}/:
         get:
+            summary: Get Geolocation Data
+            description: Retrieve geolocation data for a specific country
             tags:
-                - Geo
-            summary: Get geo coding
+                - Location
             parameters:
-                - name: country
-                  in: path
-                  description: Country name
+                - in: path
+                  name: country
+                  description: Country code or name
                   required: true
                   schema:
                       type: string
@@ -57,15 +166,4 @@ paths:
                                 type: array
                                 items:
                                     type: string
-            x-controller: weatherController.getGeo
-components:
-    schemas:
-        WeatherData:
-            type: object
-            properties:
-                property1:
-                    type: string
-                    description: Description of property1
-                property2:
-                    type: integer
-                    description: Description of property2
+                                    example: ["-33.87", "151.21", "Sydney"]

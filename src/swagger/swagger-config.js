@@ -13,5 +13,5 @@ module.exports = swaggerJsDoc({
             },
         },
     },
-    apis: ["app/controllers/*.js"],
+    apis: ["src/swagger/*.yaml"],
 });
